@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalpuzMc | Minecraft Sunucusu</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        /* Arka plan ışıltısı */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 30%, rgba(255, 170, 0, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container { position: relative; z-index: 1; max-width: 800px; width: 100%; }
+
+        /* Sağ üst hesap alanı */
+        .top-right {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            z-index: 10;
+        }
+        .credit-badge {
+            background: #1a1a1a;
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .login-btn {
+            background: #ffaa00;
+            color: #000;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .login-btn:hover { background: #ffc233; transform: scale(1.05); }
+
+        /* Ana içerik */
+        .logo { font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 8px; }
+        .logo span { color: #ffaa00; }
+        .subtitle { color: #888; font-size: 1.1rem; margin-bottom: 40px; }
+
+        /* Sunucu kartı */
+        .server-card {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .ip-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .ip-text {
+            background: #1a1a1a;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            color: #ffaa00;
+            border: 1px solid #333;
+        }
+        .copy-btn {
+            background: #ffaa00;
+            border: none;
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: #ffc233; }
+
+        /* Durum bilgisi */
+        .status-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+        .status-item { display: flex; flex-direction: column; gap: 5px; }
+        .status-label { color: #666; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .status-value { font-size: 1.5rem; font-weight: bold; }
+        .online { color: #4ade80; }
+        .offline { color: #f87171; }
+        .player-count { color: #ffaa00; }
+
+        /* Butonlar */
+        .links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+        }
+        .link-btn:hover { border-color: #ffaa00; color: #ffaa00; }
+        .link-btn.discord { background: #5865F2; border-color: #5865F2; color: #fff; }
+        .link-btn.discord:hover { background: #4752C4; }
+
+        /* Hoş geldin hediyesi */
+        .gift-banner {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid #ffaa00;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .gift-banner h3 { color: #ffaa00; margin-bottom: 8px; }
+        .gift-banner p { color: #aaa; font-size: 0.9rem; }
+
+        /* VIP vitrini */
+        .vip-section { margin-top: 40px; }
+        .vip-title { font-size: 1.8rem; margin-bottom: 20px; }
+        .vip-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .vip-card {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 25px;
+            width: 220px;
+            transition: 0.2s;
+        }
+        .vip-card:hover { border-color: #ffaa00; transform: translateY(-5px); }
+        .vip-card.mvip { border-color: #a855f7; }
+        .vip-card.mvip:hover { border-color: #c084fc; }
+        .vip-name { font-size: 1.4rem; font-weight: 900; margin-bottom: 5px; }
+        .vip-card.mvip .vip-name { color: #a855f7; }
+        .vip-price { color: #ffaa00; font-size: 1.1rem; margin-bottom: 15px; }
+        .vip-card.mvip .vip-price { color: #c084fc; }
+        .vip-buy {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            background: #ffaa00;
+            color: #000;
+        }
+        .vip-card.mvip .vip-buy { background: #a855f7; color: #fff; }
+        .vip-buy:hover { opacity: 0.9; }
+
+        .footer { margin-top: 50px; color: #444; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Sağ üst hesap -->
+    <div class="top-right">
+        <div class="credit-badge" id="creditDisplay">💰 0 Kredi</div>
+        <button class="login-btn" onclick="alert('Hesap sistemi yakında aktif olacak! Şimdilik sadece gezinebilirsin.')">Giriş Yap</button>
+    </div>
+
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">Balpuz<span>Mc</span></div>
+        <p class="subtitle">Türkiye'nin Yeni Nesil Minecraft Sunucusu</p>
+
+        <!-- Sunucu kartı -->
+        <div class="server-card">
+            <div class="ip-box">
+                <div class="ip-text" id="serverIP">BalpuzMc.mcgiris.online</div>
+                <button class="copy-btn" onclick="copyIP()">📋 IP Kopyala</button>
+            </div>
+            <div class="status-row">
+                <div class="status-item">
+                    <span class="status-label">Durum</span>
+                    <span class="status-value" id="serverStatus">Yükleniyor...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Online Oyuncu</span>
+                    <span class="status-value player-count" id="playerCount">- / -</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Sürüm</span>
+                    <span class="status-value" style="font-size:1.1rem;color:#aaa;">1.16.x - 26.x</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Linkler -->
+        <div class="links">
+            <a href="https://discord.gg/g3342hRGx" target="_blank" class="link-btn discord">💬 Discord</a>
+            <a href="https://www.tiktok.com/@1.berkeren_36" target="_blank" class="link-btn">🎵 TikTok (berkeren)</a>
+            <a href="https://www.tiktok.com/@theholmes_52" target="_blank" class="link-btn">🎵 TikTok (holmes)</a>
+            <a href="https://www.instagram.com/1.berkeren_36" target="_blank" class="link-btn">📸 Instagram</a>
+        </div>
+
+        <!-- Hoş geldin hediyesi -->
+        <div class="gift-banner">
+            <h3>🎁 Siteye Özel Hediye!</h3>
+            <p>Siteye kayıt olan herkese <strong style="color:#ffaa00;">100 Kredi</strong> hediye! (Hesap sistemi aktif olunca geçerli olacak.)</p>
+        </div>
+
+        <!-- VIP vitrini -->
+        <div class="vip-section">
+            <h2 class="vip-title">VIP Paketleri</h2>
+            <div class="vip-grid">
+                <div class="vip-card">
+                    <div class="vip-name">VIP</div>
+                    <div class="vip-price">75 Kredi / 7 Gün</div>
+                    <button class="vip-buy" onclick="alert('Satın alma sistemi yakında!')">Satın Al</button>
+                </div>
+                <div class="vip-card mvip">
+                    <div class="vip-name">MVIP</div>
+                    <div class="vip-price">150 Kredi / 7 Gün</div>
+                    <button class="vip-buy" onclick="alert('Satın alma sistemi yakında!')">Satın Al</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">BalpuzMc &copy; 2026 — Tüm hakları saklıdır.</div>
+    </div>
+
+    <script>
+        // IP kopyalama
+        function copyIP() {
+            const ip = document.getElementById('serverIP').innerText;
+            navigator.clipboard.writeText(ip).then(() => {
+                alert('IP kopyalandı: ' + ip);
+            }).catch(() => {
+                // Fallback
+                const temp = document.createElement('textarea');
+                temp.value = ip;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                alert('IP kopyalandı: ' + ip);
+            });
+        }
+
+        // Canlı sunucu durumu (mcsrvstat.us API)
+        async function fetchServerStatus() {
+            const statusEl = document.getElementById('serverStatus');
+            const playerEl = document.getElementById('playerCount');
+            try {
+                const res = await fetch('https://api.mcsrvstat.us/3/BalpuzMc.mcgiris.online');
+                const data = await res.json();
+
+                if (data.online) {
+                    statusEl.textContent = 'Çevrimiçi';
+                    statusEl.className = 'status-value online';
+                    if (data.players) {
+                        playerEl.textContent = data.players.online + ' / ' + data.players.max;
+                    } else {
+                        playerEl.textContent = 'Bilinmiyor';
+                    }
+                } else {
+                    statusEl.textContent = 'Çevrimdışı';
+                    statusEl.className = 'status-value offline';
+                    playerEl.textContent = '0 / 0';
+                }
+            } catch (e) {
+                statusEl.textContent = 'Kontrol Edilemedi';
+                statusEl.className = 'status-value';
+                playerEl.textContent = '- / -';
+            }
+        }
+
+        // Sayfa yüklenince ve her 30 saniyede bir güncelle
+        fetchServerStatus();
+        setInterval(fetchServerStatus, 30000);
+    </script>
+</body>
+</html>
