@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BalpuzMc | Minecraft Sunucusu</title>
+    <title>BalpuzMc | BoxPvP Sunucusu</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap');
 
@@ -11,10 +11,9 @@
         
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #040b16; /* Çok koyu buzul gecesi */
-            color: #e0f2fe; /* Buz beyazı yazılar */
+            background-color: #040b16;
+            color: #e0f2fe;
             min-height: 100vh;
-            /* Buz mavisi ışıltılar */
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.1), transparent 30%),
                 radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.08), transparent 30%);
@@ -130,6 +129,28 @@
         .status-dot { width: 10px; height: 10px; background: #38bdf8; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #38bdf8; margin-right: 8px; }
         .player-count { color: #bae6fd; font-size: 1rem; }
 
+        /* OYUN MODLARI */
+        .game-modes {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .section-title { font-size: 2rem; font-weight: 900; margin-bottom: 30px; color: #fff; text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .mod-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .mod-card {
+            background: rgba(4, 11, 22, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            width: 300px;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .mod-card:hover { border-color: #38bdf8; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15); }
+        .mod-card h3 { color: #38bdf8; font-size: 1.4rem; margin-bottom: 10px; }
+        .mod-card p { color: #bae6fd; font-size: 0.95rem; line-height: 1.4; opacity: 0.8; }
+
         /* KUTULAR / PANELLER (MAIN) */
         .main-content {
             max-width: 1200px;
@@ -218,14 +239,10 @@
         }
         .announcement-item {
             padding: 15px 0;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
-            display: flex; align-items: flex-start; gap: 15px;
+            display: flex; align-items: center; gap: 15px;
         }
-        .announcement-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .ann-date { color: #38bdf8; font-weight: bold; font-size: 0.9rem; min-width: 100px; }
-        .ann-text { color: #e0f2fe; line-height: 1.5; opacity: 0.9; }
-        .ann-text a { color: #38bdf8; text-decoration: none; font-weight: bold; }
-        .ann-text a:hover { text-decoration: underline; }
+        .ann-date { color: #38bdf8; font-weight: bold; font-size: 1.1rem; min-width: 100px; }
+        .ann-text { color: #e0f2fe; font-size: 1.2rem; font-weight: bold; line-height: 1.5; }
 
         /* FOOTER */
         .footer { text-align: center; padding: 30px; color: #7dd3fc; font-size: 0.9rem; border-top: 1px solid rgba(56, 189, 248, 0.1); opacity: 0.7; }
@@ -245,9 +262,9 @@
 
     <!-- HERO ALANI -->
     <header class="hero">
-        <div class="hero-badge">❄️ Türkiye'nin En İyi Minecraft Sunucusu ❄️</div>
+        <div class="hero-badge">⚔️ Türkiye'nin En İyi BoxPvP Sunucusu ⚔️</div>
         <h1 class="hero-title">Balpuz<span>Mc</span> Dünyasına<br>Hoş Geldiniz!</h1>
-        <p class="hero-subtitle">Sürükleyici oyun modları, eşsiz etkinlikler ve dost canlısı topluluğuyla buz gibi bir maceraya hemen katıl!</p>
+        <p class="hero-subtitle">Kılıcını kuşan, arenaya çık ve rakiplerini alt et! Eşsiz BoxPvP deneyimi ve buz gibi rekabet seni bekliyor.</p>
         
         <div class="ip-container">
             <div>
@@ -261,6 +278,25 @@
         </div>
     </header>
 
+    <!-- OYUN MODLARI -->
+    <section class="game-modes">
+        <h2 class="section-title">⚔️ Oyun Modlarımız</h2>
+        <div class="mod-grid">
+            <div class="mod-card">
+                <h3>BoxPvP</h3>
+                <p>Kendi kutunu inşa et, geliştir ve diğer oyuncuların kutularına saldırarak ganimetlerini ele geçir!</p>
+            </div>
+            <div class="mod-card">
+                <h3>Practice</h3>
+                <p>Birebir PvP arenalarında kılıç, sopa ve bow yeteneklerini geliştir. Gerçek savaşa hazırlan!</p>
+            </div>
+            <div class="mod-card">
+                <h3>Etkinlikler</h3>
+                <p>Her akşam düzenlenen ödüllü turnuvalar, drop partileri ve özel PvP etkinlikleriyle dolu dolu anlar!</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ANA PANELLER -->
     <main class="main-content">
         
@@ -268,7 +304,7 @@
         <section class="panel">
             <div class="panel-icon">💎</div>
             <h2 class="panel-title">Kredi Yükle</h2>
-            <p class="panel-desc">Sunucu içi mağazamızdan VIP veya özel eşyalar almak için kredi yükleyin.</p>
+            <p class="panel-desc">Sunucu içi mağazamızdan VIP, kutu anahtarı veya özel eşyalar almak için kredi yükleyin.</p>
             
             <div class="credit-packs">
                 <div class="pack" onclick="alert('50 Kredi seçildi. (Ödeme sistemi yakında!)')">
@@ -319,19 +355,10 @@
             <h2 class="panel-title" style="margin-bottom: 20px;">📢 Duyurular</h2>
             
             <div class="announcement-item">
-                <div class="ann-date">Bugün</div>
-                <div class="ann-text"><strong>🎁 Siteye Özel Hediye!</strong> Sitemize kayıt olan ilk 100 kişiye <strong>100 Kredi</strong> hediye! (Sistem aktif olunca geçerlidir.)</div>
+                <div class="ann-date">GÜNCEL</div>
+                <div class="ann-text">Sunucumuzda sadece BoxPvP yapılmaktadır.</div>
             </div>
             
-            <div class="announcement-item">
-                <div class="ann-date">Dün</div>
-                <div class="ann-text"><strong>⚔️ Yeni Sezon Başladı!</strong> Tüm sunucularda harita sıfırlandı ve yeni etkinlikler eklendi. Hemen gir ve yerini kap!</div>
-            </div>
-            
-            <div class="announcement-item">
-                <div class="ann-date">3 Gün Önce</div>
-                <div class="ann-text"><strong>💬 Discord Sunucumuz Açıldı!</strong> Etkinlikler, çekilişler ve topluluk için Discord sunucumuza katılmayı unutma. <a href="https://discord.gg/g3342hRGx" target="_blank">Hemen Katıl</a></div>
-            </div>
         </section>
 
     </main>
