@@ -31,6 +31,28 @@
         
         .nav-right { display: flex; gap: 15px; align-items: center; }
         
+        /* YENİ: ÜST MENÜDEKİ OYUNCU BİLGİSİ */
+        .player-top-badge {
+            display: none; /* Başlangıçta gizli */
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .player-top-badge span.credit-amount {
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+
         .admin-login-btn {
             background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444;
             padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
@@ -88,7 +110,7 @@
 
         /* KUTULAR / PANELLER (MAIN) */
         .main-content { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; } .navbar { padding: 15px 20px; } .hero-title { font-size: 2.5rem; } }
+        @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; } .navbar { padding: 15px 20px; flex-direction: column; gap: 10px;} .hero-title { font-size: 2.5rem; } }
 
         .panel {
             background: linear-gradient(180deg, rgba(14, 165, 233, 0.05) 0%, rgba(4, 11, 22, 0.8) 100%);
@@ -236,10 +258,16 @@
 </head>
 <body>
 
-    <!-- ÜST MENÜ (Sadece Yönetici Girişi) -->
+    <!-- ÜST MENÜ -->
     <nav class="navbar">
         <a href="#" class="nav-logo">Balpuz<span>Mc</span></a>
         <div class="nav-right">
+            <!-- YENİ: Oyuncu Bilgi Alanı -->
+            <div class="player-top-badge" id="navbarPlayerInfo">
+                👤 <span id="navPlayerName" style="color: #fff;">Oyuncu</span>
+                | 💰 <span class="credit-amount" id="navPlayerCredit">0</span> Kredi
+            </div>
+            
             <button class="admin-login-btn" id="adminLoginBtn">Yönetici Girişi</button>
         </div>
     </nav>
@@ -264,12 +292,11 @@
     <!-- ANA PANELLER -->
     <main class="main-content">
         
-        <!-- OYUNCU GİRİŞ / KAYIT PANELİ (MAILSİZ) -->
+        <!-- OYUNCU GİRİŞ / KAYIT PANELİ -->
         <section class="player-panel">
             <h2>🎮 Oyuncu Girişi</h2>
             <p>Minecraft oyun içi isminiz ve şifreniz ile siteye giriş yapın veya yeni hesap oluşturun.</p>
             
-            <!-- GÜVENLİK UYARISI -->
             <div class="security-warning">
                 ⚠️ Lütfen şifrenizi başka hiçbir yerde kullanmayın, sadece buraya özel olsun!
             </div>
@@ -353,7 +380,7 @@
             </div>
         </section>
 
-        <!-- YÖNETİCİ KREDİ PANELİ (Sadece Admin Görür) -->
+        <!-- YÖNETİCİ KREDİ PANELİ -->
         <section class="admin-panel" id="adminPanel">
             <h2>⚙️ Yönetici Kredi Paneli</h2>
             <p class="panel-desc">Oyunculara kredi ekleyin veya çekin.</p>
@@ -381,7 +408,7 @@
         BalpuzMc &copy; 2026 — Tüm hakları saklıdır. | TikTok & Instagram: <a href="https://www.tiktok.com/@1.berkeren_36" target="_blank">@1.berkeren_36</a>
     </footer>
 
-    <!-- YÖNETİCİ GİRİŞ MODALI (E-POSTA İLE) -->
+    <!-- YÖNETİCİ GİRİŞ MODALI -->
     <div class="modal-overlay" id="adminLoginModal">
         <div class="modal-content">
             <button class="modal-close" onclick="document.getElementById('adminLoginModal').style.display='none'">×</button>
@@ -432,6 +459,11 @@
 
         const ADMIN_EMAIL = "wallsinner680@gmail.com";
         let currentPlayerName = "";
+
+        // HTML Elementleri
+        const navbarPlayerInfo = document.getElementById('navbarPlayerInfo');
+        const navPlayerName = document.getElementById('navPlayerName');
+        const navPlayerCredit = document.getElementById('navPlayerCredit');
 
         // --- YÖNETİCİ GİRİŞİ ---
         document.getElementById('adminLoginBtn').onclick = () => {
@@ -546,6 +578,11 @@
                 document.getElementById('infoPlayerName').textContent = mcName;
                 document.getElementById('infoPlayerCredit').textContent = kredi;
 
+                // ÜST MENÜYÜ GÜNCELLE
+                navbarPlayerInfo.style.display = 'flex';
+                navPlayerName.textContent = mcName;
+                navPlayerCredit.textContent = kredi;
+
             } catch (error) {
                 statusEl.style.color = '#f87171';
                 statusEl.textContent = 'Giriş başarısız: MC Adı veya Şifre yanlış.';
@@ -560,6 +597,9 @@
             document.getElementById('playerStatus').style.display = 'none';
             document.getElementById('playerMCName').value = '';
             document.getElementById('playerPass').value = '';
+            
+            // ÜST MENÜYÜ GİZLE
+            navbarPlayerInfo.style.display = 'none';
         };
 
         // --- ADMİN KREDİ GÜNCELLEME ---
@@ -599,7 +639,9 @@
                 if (currentPlayerName.toLowerCase() === playerName.toLowerCase()) {
                     const newSnap = await getDoc(playerRef);
                     if (newSnap.exists()) {
-                        document.getElementById('infoPlayerCredit').textContent = newSnap.data().kredi || 0;
+                        const newKredi = newSnap.data().kredi || 0;
+                        document.getElementById('infoPlayerCredit').textContent = newKredi;
+                        navPlayerCredit.textContent = newKredi; // Üst menüyü de güncelle
                     }
                 }
 
