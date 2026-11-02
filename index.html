@@ -112,7 +112,7 @@
         .player-panel h2 { color: #38bdf8; font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);}
         .player-panel p { color: #bae6fd; margin-bottom: 20px; }
         
-        /* GÜVENLİK UYARISI (YENİ) */
+        /* GÜVENLİK UYARISI */
         .security-warning {
             background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #fca5a5;
             padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95rem; font-weight: bold;
@@ -144,7 +144,7 @@
         }
         .player-info-box h3 { color: #10b981; font-size: 1.5rem; margin-bottom: 10px; }
         .player-info-box p { font-size: 1.2rem; margin-bottom: 5px; }
-        .player-info-box span { font-weight: bold; color: #fbbf24; }
+        .player-info-box span { font-weight: bold; color: #fbbf24; font-size: 1.5rem;}
         .logout-link { color: #ef4444; cursor: pointer; text-decoration: underline; margin-top: 10px; display: inline-block;}
 
         /* KREDİ YÜKLEME VE VIP */
@@ -285,8 +285,8 @@
 
             <!-- Giriş Yapınca Görünecek Kutu -->
             <div class="player-info-box" id="playerInfoBox">
-                <h3>Hoş geldin, <span id="infoPlayerName"></span>!</h3>
-                <p>Kredi Bakiyen: <span id="infoPlayerCredit">0</span> Kredi</p>
+                <h3>Hoş geldin, <span id="infoPlayerName" style="color:#10b981;"></span>!</h3>
+                <p style="margin-top: 10px;">Kredi Bakiyen: <span id="infoPlayerCredit">0</span> Kredi</p>
                 <p style="font-size:0.9rem; opacity:0.8; margin-top:5px;">Kredi yüklemek için lütfen WallSinner ile iletişime geçin.</p>
                 <span class="logout-link" onclick="playerLogout()">Çıkış Yap</span>
             </div>
@@ -386,7 +386,6 @@
         <div class="modal-content">
             <button class="modal-close" onclick="document.getElementById('adminLoginModal').style.display='none'">×</button>
             <h2>Yönetici Girişi</h2>
-            <!-- YÖNETİCİ İÇİN DE UYARI -->
             <div style="color: #fca5a5; font-size: 0.85rem; margin-bottom: 15px;">Lütfen şifrenizi başka hiçbir yerde kullanmayın, sadece buraya özel olsun!</div>
             
             <input type="email" id="adminEmail" class="modal-input" placeholder="E-posta">
@@ -531,6 +530,7 @@
                 currentPlayerName = mcName;
                 statusEl.style.display = 'none';
 
+                // Veritabanından krediyi çek
                 const playerRef = doc(db, 'players', mcName.toLowerCase());
                 const playerSnap = await getDoc(playerRef);
                 let kredi = 0;
@@ -540,6 +540,7 @@
                     await setDoc(playerRef, { kredi: 0 });
                 }
 
+                // Arayüzü güncelle
                 document.getElementById('playerAuthForm').style.display = 'none';
                 document.getElementById('playerInfoBox').style.display = 'block';
                 document.getElementById('infoPlayerName').textContent = mcName;
@@ -593,6 +594,15 @@
                 statusEl.textContent = `${playerName} adlı oyuncuya ${action === 'add' ? 'eklendi' : 'çekildi'}: ${amount} Kredi.`;
                 document.getElementById('targetPlayer').value = '';
                 document.getElementById('creditAmount').value = '';
+
+                // Eğer işlem yapılan kişi şu an sitede giriş yapmış olan oyuncuysa, ekrandaki krediyi anlık güncelle
+                if (currentPlayerName.toLowerCase() === playerName.toLowerCase()) {
+                    const newSnap = await getDoc(playerRef);
+                    if (newSnap.exists()) {
+                        document.getElementById('infoPlayerCredit').textContent = newSnap.data().kredi || 0;
+                    }
+                }
+
             } catch (error) {
                 statusEl.style.color = '#f87171';
                 statusEl.textContent = 'Hata: ' + error.message + ' (Firestore kurallarını kontrol edin)';
