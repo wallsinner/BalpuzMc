@@ -31,12 +31,12 @@
         
         .nav-right { display: flex; gap: 15px; align-items: center; }
         
-        .login-btn {
-            background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none;
-            padding: 10px 25px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s;
+        .admin-login-btn {
+            background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444;
+            padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
             font-family: 'Outfit', sans-serif;
         }
-        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(56, 189, 248, 0.5); }
+        .admin-login-btn:hover { background: #ef4444; color: #fff; }
 
         /* HERO (GİRİŞ EKRANI) */
         .hero { text-align: center; padding: 80px 20px 50px; display: flex; flex-direction: column; align-items: center; }
@@ -55,7 +55,6 @@
             border: 1px solid rgba(56, 189, 248, 0.3); padding: 10px 15px 10px 25px; border-radius: 12px;
             gap: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
         }
-        .ip-container:hover { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); }
         .ip-text { font-family: monospace; font-size: 1.3rem; color: #fff; font-weight: bold; }
         .copy-btn {
             background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid #38bdf8;
@@ -72,16 +71,13 @@
         
         .mod-card {
             background: rgba(4, 11, 22, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px;
-            padding: 25px; width: 300px; transition: 0.3s; backdrop-filter: blur(10px); position: relative;
+            padding: 25px; width: 300px; transition: 0.3s; backdrop-filter: blur(10px);
             display: flex; flex-direction: column; justify-content: center;
         }
         .mod-card:hover { border-color: #38bdf8; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15); }
         .mod-card h3 { color: #38bdf8; font-size: 1.5rem; margin-bottom: 10px; }
         .mod-card p { color: #bae6fd; font-size: 0.95rem; line-height: 1.4; opacity: 0.8; }
-
-        /* BAKIMDA OLANLAR İÇİN ÖZEL TASARIM */
         .mod-card.maintenance { border-color: rgba(255, 255, 255, 0.1); background: rgba(20, 20, 20, 0.4); }
-        .mod-card.maintenance:hover { border-color: #888; transform: none; box-shadow: none; }
         .mod-card.maintenance h3 { color: #888; }
         .mod-card.maintenance p { opacity: 0.5; font-weight: bold; color: #ff5500; }
         .maintenance-badge {
@@ -100,72 +96,88 @@
             position: relative; overflow: hidden; transition: 0.3s; backdrop-filter: blur(10px);
         }
         .panel:hover { border-color: #38bdf8; transform: translateY(-5px); box-shadow: 0 15px 40px rgba(56, 189, 248, 0.15); }
-        .panel::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, #38bdf8, transparent); opacity: 0; transition: 0.3s;
-        }
-        .panel:hover::before { opacity: 1; }
-
+        
         .panel-icon { font-size: 3rem; margin-bottom: 15px; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
         .panel-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: #fff; text-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
         .panel-desc { color: #bae6fd; font-size: 1rem; margin-bottom: 25px; line-height: 1.5; opacity: 0.8; }
 
-        /* KREDİ YÜKLEME PANELİ */
+        /* OYUNCU GİRİŞ / KAYIT PANELİ */
+        .player-panel {
+            grid-column: 1 / -1;
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.1) 0%, rgba(4, 11, 22, 0.8) 100%);
+            border: 2px solid #38bdf8; border-radius: 20px; padding: 30px; margin-bottom: 20px;
+            backdrop-filter: blur(10px); text-align: center;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+        .player-panel h2 { color: #38bdf8; font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);}
+        .player-panel p { color: #bae6fd; margin-bottom: 20px; }
+        .player-form { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .player-input {
+            padding: 15px; border-radius: 8px; border: 1px solid #38bdf8; background: rgba(4, 11, 22, 0.8); 
+            color: #fff; font-size: 1rem; font-family: 'Outfit', sans-serif; width: 100%; max-width: 300px;
+        }
+        .player-input:focus { outline: none; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+        
+        .player-btn-login {
+            padding: 15px 30px; border-radius: 8px; border: none; background: #2563eb; color: #fff;
+            font-weight: 900; cursor: pointer; font-size: 1rem; transition: 0.2s; font-family: 'Outfit', sans-serif;
+        }
+        .player-btn-login:hover { background: #1d4ed8; }
+        
+        .player-btn-register {
+            padding: 15px 30px; border-radius: 8px; border: none; background: #10b981; color: #fff;
+            font-weight: 900; cursor: pointer; font-size: 1rem; transition: 0.2s; font-family: 'Outfit', sans-serif;
+        }
+        .player-btn-register:hover { background: #059669; }
+
+        .player-info-box {
+            display: none; margin-top: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981;
+            padding: 20px; border-radius: 12px; color: #fff;
+        }
+        .player-info-box h3 { color: #10b981; font-size: 1.5rem; margin-bottom: 10px; }
+        .player-info-box p { font-size: 1.2rem; margin-bottom: 5px; }
+        .player-info-box span { font-weight: bold; color: #fbbf24; }
+        .logout-link { color: #ef4444; cursor: pointer; text-decoration: underline; margin-top: 10px; display: inline-block;}
+
+        /* KREDİ YÜKLEME VE VIP */
         .credit-packs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .pack {
             flex: 1 1 30%; background: rgba(4, 11, 22, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); padding: 15px 10px; text-align: center;
             border-radius: 10px; cursor: pointer; transition: 0.2s;
         }
-        .pack:hover, .pack.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+        .pack:hover { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
         .pack-amount { color: #38bdf8; font-weight: 900; font-size: 1.1rem; }
         .pack-price { color: #bae6fd; font-size: 0.9rem; margin-top: 5px; }
-        
         .buy-action-btn {
             width: 100%; padding: 15px; border-radius: 10px; border: none;
             background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff;
             font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
-            font-family: 'Outfit', sans-serif; box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3);
+            font-family: 'Outfit', sans-serif;
         }
-        .buy-action-btn:hover { transform: scale(1.02); box-shadow: 0 5px 25px rgba(56, 189, 248, 0.6); }
+        .buy-action-btn:hover { transform: scale(1.02); }
 
-        /* VIP PANELİ */
         .vip-grid { display: flex; gap: 15px; flex-direction: column; }
         .vip-item {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(4, 11, 22, 0.6); padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2);
         }
-        .vip-item.mvip { border-color: #818cf8; background: rgba(129, 140, 248, 0.05); }
+        .vip-item.mvip { border-color: #818cf8; }
         .vip-info h4 { font-size: 1.2rem; color: #fff; margin-bottom: 4px; }
         .vip-info p { color: #bae6fd; font-size: 0.9rem; opacity: 0.8; }
         .vip-price { color: #38bdf8; font-weight: 900; font-size: 1.2rem; margin-right: 15px; }
-        .vip-item.mvip .vip-price { color: #818cf8; }
         .vip-buy-btn {
             background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid #38bdf8; padding: 10px 20px;
             border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
-        .vip-buy-btn:hover { background: #38bdf8; color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
-        .vip-item.mvip .vip-buy-btn { background: rgba(129, 140, 248, 0.1); color: #818cf8; border-color: #818cf8; }
-        .vip-item.mvip .vip-buy-btn:hover { background: #818cf8; color: #fff; box-shadow: 0 0 15px rgba(129, 140, 248, 0.4); }
-
-        /* BVIP - ALTIN TEMA */
-        .vip-item.bvip { border-color: #fbbf24; background: rgba(251, 191, 36, 0.05); }
-        .vip-item.bvip .vip-price { color: #fbbf24; }
-        .vip-item.bvip .vip-buy-btn { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border-color: #fbbf24; }
-        .vip-item.bvip .vip-buy-btn:hover { background: #fbbf24; color: #000; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
-
-        /* BVIP+ - PREMIUM PEMBE TEMA */
-        .vip-item.bvip-plus { border-color: #f472b6; background: rgba(244, 114, 182, 0.05); }
-        .vip-item.bvip-plus .vip-price { color: #f472b6; }
-        .vip-item.bvip-plus .vip-buy-btn { background: rgba(244, 114, 182, 0.1); color: #f472b6; border-color: #f472b6; }
-        .vip-item.bvip-plus .vip-buy-btn:hover { background: #f472b6; color: #000; box-shadow: 0 0 15px rgba(244, 114, 182, 0.4); }
+        .vip-buy-btn:hover { background: #38bdf8; color: #000; }
 
         /* YÖNETİCİ KREDİ PANELİ */
         .admin-panel {
             grid-column: 1 / -1; background: linear-gradient(180deg, rgba(239, 68, 68, 0.1) 0%, rgba(4, 11, 22, 0.8) 100%);
-            border: 1px solid #ef4444; border-radius: 20px; padding: 30px; margin-bottom: 50px; backdrop-filter: blur(10px);
-            display: none; /* Başlangıçta gizli */
+            border: 1px solid #ef4444; border-radius: 20px; padding: 30px; margin-bottom: 50px;
+            display: none;
         }
-        .admin-panel h2 { color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.3); margin-bottom: 15px;}
+        .admin-panel h2 { color: #ef4444; margin-bottom: 15px;}
         .admin-form { display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }
         .admin-input {
             padding: 12px; border-radius: 8px; border: 1px solid #ef4444; background: rgba(4, 11, 22, 0.8); 
@@ -173,67 +185,54 @@
         }
         .admin-btn-add {
             padding: 12px 25px; border-radius: 8px; border: none; background: #10b981; color: #fff;
-            font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.2s; font-family: 'Outfit', sans-serif;
+            font-weight: bold; cursor: pointer; font-size: 1rem;
         }
-        .admin-btn-add:hover { background: #059669; }
         .admin-btn-remove {
             padding: 12px 25px; border-radius: 8px; border: none; background: #ef4444; color: #fff;
-            font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.2s; font-family: 'Outfit', sans-serif;
+            font-weight: bold; cursor: pointer; font-size: 1rem;
         }
-        .admin-btn-remove:hover { background: #b91c1c; }
 
-        /* DUYURULAR */
+        /* DUYURULAR & FOOTER */
         .announcements {
             grid-column: 1 / -1; background: linear-gradient(180deg, rgba(14, 165, 233, 0.05) 0%, rgba(4, 11, 22, 0.8) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 30px; margin-bottom: 50px; backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 30px; margin-bottom: 50px;
         }
         .announcement-item { padding: 15px 0; display: flex; align-items: center; gap: 15px; }
-        .ann-date { color: #38bdf8; font-weight: bold; font-size: 1.1rem; min-width: 100px; }
-        .ann-text { color: #e0f2fe; font-size: 1.2rem; font-weight: bold; line-height: 1.5; }
-
-        /* FOOTER */
-        .footer { text-align: center; padding: 30px; color: #7dd3fc; font-size: 0.9rem; border-top: 1px solid rgba(56, 189, 248, 0.1); opacity: 0.7; }
+        .ann-date { color: #38bdf8; font-weight: bold; font-size: 1.1rem; }
+        .ann-text { color: #e0f2fe; font-size: 1.2rem; font-weight: bold; }
+        .footer { text-align: center; padding: 30px; color: #7dd3fc; font-size: 0.9rem; border-top: 1px solid rgba(56, 189, 248, 0.1); }
         .footer a { color: #38bdf8; text-decoration: none; }
 
-        /* MODAL */
+        /* MODALLAR */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);
         }
         .modal-content {
             background: #0a1628; border: 1px solid #38bdf8; border-radius: 16px; padding: 30px; width: 90%; max-width: 400px; position: relative;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2); text-align: center;
+            text-align: center;
         }
-        .modal-content h2 { color: #fff; margin-bottom: 20px; font-size: 1.5rem; }
+        .modal-content h2 { color: #fff; margin-bottom: 20px; }
         .modal-input {
-            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #38bdf8; background: #040b16; color: #fff; font-size: 1rem; font-family: 'Outfit', sans-serif;
+            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #38bdf8; background: #040b16; color: #fff; font-size: 1rem;
         }
-        .modal-input:focus { outline: none; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
         .modal-btn {
-            width: 100%; padding: 12px; border-radius: 8px; border: none; background: linear-gradient(135deg,#38bdf8,#2563eb); color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer; font-family: 'Outfit', sans-serif;
+            width: 100%; padding: 12px; border-radius: 8px; border: none; background: linear-gradient(135deg,#38bdf8,#2563eb); color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer;
         }
-        .modal-btn:hover { opacity: 0.9; }
-        .modal-close {
-            position: absolute; top: 12px; right: 16px; background: none; border: none; color: #7dd3fc; font-size: 1.5rem; cursor: pointer;
-        }
+        .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #7dd3fc; font-size: 1.5rem; cursor: pointer; }
         .modal-error { color: #f87171; margin-bottom: 12px; font-size: 0.9rem; display: none; }
-
-        /* İLETİŞİM MODALI */
-        .contact-box {
-            background: rgba(56, 189, 248, 0.1); border: 1px dashed #38bdf8; border-radius: 10px;
-            padding: 20px; margin-top: 15px; text-align: left;
-        }
-        .contact-box h3 { color: #fbbf24; font-size: 1.2rem; margin-bottom: 15px; text-align: center;}
+        .contact-box { background: rgba(56, 189, 248, 0.1); border: 1px dashed #38bdf8; padding: 20px; border-radius: 10px; margin-top: 15px; text-align: left; }
+        .contact-box h3 { color: #fbbf24; margin-bottom: 15px; text-align: center;}
         .contact-box p { margin-bottom: 10px; color: #fff; font-size: 1.1rem;}
         .contact-box strong { color: #38bdf8; display: inline-block; width: 90px; }
     </style>
 </head>
 <body>
 
-    <!-- ÜST MENÜ -->
+    <!-- ÜST MENÜ (Sadece Yönetici Girişi) -->
     <nav class="navbar">
         <a href="#" class="nav-logo">Balpuz<span>Mc</span></a>
         <div class="nav-right">
-            <button class="login-btn" id="loginBtn">Giriş Yap</button>
+            <button class="admin-login-btn" id="adminLoginBtn">Yönetici Girişi</button>
         </div>
     </nav>
 
@@ -241,7 +240,6 @@
     <header class="hero">
         <div class="hero-badge">❄️ Türkiye'nin İyi Minecraft Sunucularından Biri ❄️</div>
         <h1 class="hero-title">Balpuz<span>Mc</span> Dünyasına<br>Hoş Geldiniz!</h1>
-        <p class="hero-subtitle">Kılıcını kuşan, arenaya çık ve rakiplerini alt et! Eşsiz oyun modları ve buz gibi rekabet seni bekliyor.</p>
         
         <div class="ip-container">
             <div>
@@ -255,34 +253,32 @@
         </div>
     </header>
 
-    <!-- OYUN MODLARI -->
-    <section class="game-modes">
-        <h2 class="section-title">⚔️ Oyun Modlarımız</h2>
-        <div class="mod-grid">
-            
-            <div class="mod-card maintenance">
-                <h3>SMP</h3>
-                <p>Sadece Bakımda</p>
-                <div><span class="maintenance-badge">Bakımda</span></div>
-            </div>
-
-            <div class="mod-card">
-                <h3>BoxPvP</h3>
-                <p>Kasıl, maden kaz, gücüne güç kat! Kendi kutunu inşa et ve rakiplerini alt et.</p>
-            </div>
-
-            <div class="mod-card maintenance">
-                <h3>GenPvP</h3>
-                <p>Sadece Bakımda</p>
-                <div><span class="maintenance-badge">Bakımda</span></div>
-            </div>
-
-        </div>
-    </section>
-
     <!-- ANA PANELLER -->
     <main class="main-content">
         
+        <!-- OYUNCU GİRİŞ / KAYIT PANELİ (MAILSİZ) -->
+        <section class="player-panel">
+            <h2>🎮 Oyuncu Girişi</h2>
+            <p>Minecraft oyun içi isminiz ve şifreniz ile siteye giriş yapın veya yeni hesap oluşturun.</p>
+            
+            <!-- Giriş/Kayıt Formu -->
+            <div class="player-form" id="playerAuthForm">
+                <input type="text" id="playerMCName" class="player-input" placeholder="Minecraft Adınız">
+                <input type="password" id="playerPass" class="player-input" placeholder="Şifreniz">
+                <button class="player-btn-login" onclick="playerLogin()">Giriş Yap</button>
+                <button class="player-btn-register" onclick="playerRegister()">Kayıt Ol</button>
+            </div>
+            <div id="playerStatus" style="margin-top: 15px; font-weight: bold; display: none;"></div>
+
+            <!-- Giriş Yapınca Görünecek Kutu -->
+            <div class="player-info-box" id="playerInfoBox">
+                <h3>Hoş geldin, <span id="infoPlayerName"></span>!</h3>
+                <p>Kredi Bakiyen: <span id="infoPlayerCredit">0</span> Kredi</p>
+                <p style="font-size:0.9rem; opacity:0.8; margin-top:5px;">Kredi yüklemek için lütfen WallSinner ile iletişime geçin.</p>
+                <span class="logout-link" onclick="playerLogout()">Çıkış Yap</span>
+            </div>
+        </section>
+
         <!-- KREDİ YÜKLEME PANELİ -->
         <section class="panel">
             <div class="panel-icon">💎</div>
@@ -311,7 +307,6 @@
                     <div class="pack-price">2.50 TL</div>
                 </div>
             </div>
-            
             <button class="buy-action-btn" onclick="openContactModal('Kredi Paketi')">Kredi Almak İçin Tıkla</button>
         </section>
 
@@ -323,48 +318,36 @@
             
             <div class="vip-grid">
                 <div class="vip-item">
-                    <div class="vip-info">
-                        <h4>VIP</h4>
-                        <p>7 Günlük Ayrıcalık</p>
-                    </div>
+                    <div class="vip-info"><h4>VIP</h4><p>7 Günlük Ayrıcalık</p></div>
                     <div class="vip-price">75 Kredi</div>
                     <button class="vip-buy-btn" onclick="openContactModal('VIP')">Satın Al</button>
                 </div>
                 <div class="vip-item mvip">
-                    <div class="vip-info">
-                        <h4>MVIP</h4>
-                        <p>7 Günlük Efsanevi Ayrıcalık</p>
-                    </div>
+                    <div class="vip-info"><h4>MVIP</h4><p>7 Günlük Efsanevi Ayrıcalık</p></div>
                     <div class="vip-price">150 Kredi</div>
                     <button class="vip-buy-btn" onclick="openContactModal('MVIP')">Satın Al</button>
                 </div>
                 <div class="vip-item bvip">
-                    <div class="vip-info">
-                        <h4>BVIP</h4>
-                        <p>7 Günlük Özel Ayrıcalık</p>
-                    </div>
+                    <div class="vip-info"><h4>BVIP</h4><p>7 Günlük Özel Ayrıcalık</p></div>
                     <div class="vip-price">175 Kredi</div>
                     <button class="vip-buy-btn" onclick="openContactModal('BVIP')">Satın Al</button>
                 </div>
                 <div class="vip-item bvip-plus">
-                    <div class="vip-info">
-                        <h4>BVIP+</h4>
-                        <p>7 Günlük En Üst Ayrıcalık</p>
-                    </div>
+                    <div class="vip-info"><h4>BVIP+</h4><p>7 Günlük En Üst Ayrıcalık</p></div>
                     <div class="vip-price">200 Kredi</div>
                     <button class="vip-buy-btn" onclick="openContactModal('BVIP+')">Satın Al</button>
                 </div>
             </div>
         </section>
 
-        <!-- YÖNETİCİ KREDİ PANELİ (SADECE ADMİN GÖRÜR) -->
+        <!-- YÖNETİCİ KREDİ PANELİ (Sadece Admin Görür) -->
         <section class="admin-panel" id="adminPanel">
             <h2>⚙️ Yönetici Kredi Paneli</h2>
-            <p class="panel-desc">Sadece sizin görebileceğiniz bu panelden oyunculara kredi ekleyebilir veya çekebilirsiniz.</p>
+            <p class="panel-desc">Oyunculara kredi ekleyin veya çekin.</p>
             
             <div class="admin-form">
-                <input type="text" id="targetPlayer" class="admin-input" placeholder="Oyuncunun MC Adı (Örn: WallSinner)">
-                <input type="number" id="creditAmount" class="admin-input" placeholder="Kredi Miktarı (Örn: 100)">
+                <input type="text" id="targetPlayer" class="admin-input" placeholder="Oyuncunun MC Adı">
+                <input type="number" id="creditAmount" class="admin-input" placeholder="Kredi Miktarı">
                 <button class="admin-btn-add" onclick="updatePlayerCredit('add')">➕ Ekle</button>
                 <button class="admin-btn-remove" onclick="updatePlayerCredit('remove')">➖ Çek</button>
             </div>
@@ -376,53 +359,47 @@
             <h2 class="panel-title" style="margin-bottom: 20px;">📢 Duyurular</h2>
             <div class="announcement-item">
                 <div class="ann-date">GÜNCEL</div>
-                <div class="ann-text">Sunucumuzda şu an itibariyle sadece <strong>BoxPvP</strong> aktif olarak yapılmaktadır. SMP ve GenPvP modlarımız çok yakında sizlerle!</div>
+                <div class="ann-text">Sunucumuzda şu an itibariyle sadece <strong>BoxPvP</strong> aktif olarak yapılmaktadır.</div>
             </div>
         </section>
-
     </main>
 
     <footer class="footer">
         BalpuzMc &copy; 2026 — Tüm hakları saklıdır. | TikTok & Instagram: <a href="https://www.tiktok.com/@1.berkeren_36" target="_blank">@1.berkeren_36</a>
     </footer>
 
-    <!-- YÖNETİCİ GİRİŞ MODALI -->
-    <div class="modal-overlay" id="loginModal">
+    <!-- YÖNETİCİ GİRİŞ MODALI (E-POSTA İLE) -->
+    <div class="modal-overlay" id="adminLoginModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="document.getElementById('loginModal').style.display='none'">×</button>
+            <button class="modal-close" onclick="document.getElementById('adminLoginModal').style.display='none'">×</button>
             <h2>Yönetici Girişi</h2>
-            <input type="email" id="loginEmail" class="modal-input" placeholder="E-posta">
-            <input type="password" id="loginPass" class="modal-input" placeholder="Şifre">
-            <div id="loginError" class="modal-error"></div>
-            <button class="modal-btn" id="loginSubmit">Giriş Yap</button>
+            <input type="email" id="adminEmail" class="modal-input" placeholder="E-posta">
+            <input type="password" id="adminPass" class="modal-input" placeholder="Şifre">
+            <div id="adminLoginError" class="modal-error"></div>
+            <button class="modal-btn" id="adminLoginSubmit">Giriş Yap</button>
         </div>
     </div>
 
     <!-- İLETİŞİM MODALI -->
     <div class="modal-overlay" id="contactModal">
-        <div class="modal-content" style="border-color: #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);">
+        <div class="modal-content" style="border-color: #fbbf24;">
             <button class="modal-close" onclick="document.getElementById('contactModal').style.display='none'">×</button>
             <h2 id="contactTitle" style="color: #fbbf24;">Satın Alım</h2>
-            
-            <p style="color:#bae6fd; margin-bottom: 15px; font-size: 1rem;">Ödemenizi gerçekleştirmek ve ürününüzü teslim almak için lütfen aşağıdaki kanallardan <strong>WallSinner</strong> ile iletişime geçin.</p>
-            
+            <p style="color:#bae6fd; margin-bottom: 15px;">Ödeme için lütfen <strong>WallSinner</strong> ile iletişime geçin.</p>
             <div class="contact-box">
-                <h3>Sosyal Medya & İletişim</h3>
+                <h3>İletişim</h3>
                 <p><strong>TikTok:</strong> 1.berkeren_36</p>
                 <p><strong>İnstagram:</strong> 1.berkeren_36</p>
                 <p><strong>Discord:</strong> WallSinner</p>
             </div>
-            <p style="color:#bae6fd; margin-top: 15px; font-size: 0.85rem;">* Ödemeniz onaylandıktan sonra VIP/Kredi bakiyeniz <strong>WallSinner</strong> hesabı üzerinden anında yüklenecektir.</p>
-            
-            <button class="modal-btn" onclick="document.getElementById('contactModal').style.display='none'" style="margin-top: 15px; background: #25d366;">Anladım, Kapat</button>
+            <button class="modal-btn" onclick="document.getElementById('contactModal').style.display='none'" style="margin-top: 15px; background: #25d366;">Kapat</button>
         </div>
     </div>
 
     <!-- FIREBASE SDK VE KODLAR -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        // Firestore modüllerini ekledik
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -431,72 +408,149 @@
             projectId: "balpuzmc-6899a",
             storageBucket: "balpuzmc-6899a.firebasestorage.app",
             messagingSenderId: "156418313666",
-            appId: "1:156418313666:web:901ee934e601a7424c5a5b",
-            measurementId: "G-431KVZYKRX"
+            appId: "1:156418313666:web:901ee934e601a7424c5a5b"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app); // Firestore başlatıldı
+        const db = getFirestore(app);
 
-        // SADECE BU E-POSTA ADMİN YETKİSİNE SAHİPTİR
         const ADMIN_EMAIL = "wallsinner680@gmail.com";
+        let currentPlayerName = ""; // Oyuncu giriş yaptıysa adını tutar
 
-        const loginBtn = document.getElementById('loginBtn');
-        const loginModal = document.getElementById('loginModal');
-        const loginError = document.getElementById('loginError');
-        const adminPanel = document.getElementById('adminPanel');
+        // --- YÖNETİCİ GİRİŞİ ---
+        document.getElementById('adminLoginBtn').onclick = () => {
+            document.getElementById('adminLoginError').style.display = 'none';
+            document.getElementById('adminLoginModal').style.display = 'flex';
+        };
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // Giriş yapıldı
-                loginBtn.textContent = 'Çıkış Yap (' + (user.email ? user.email.split('@')[0] : 'Admin') + ')';
-                loginBtn.style.background = '#ef4444';
-                loginBtn.onclick = () => {
-                    if(confirm('Çıkış yapmak istediğinize emin misiniz?')) signOut(auth);
-                };
-
-                // KULLANICI ADMİN Mİ KONTROL ET
-                if (user.email === ADMIN_EMAIL) {
-                    adminPanel.style.display = 'block'; // Admin panelini göster
-                } else {
-                    adminPanel.style.display = 'none';
-                }
-
-            } else {
-                // Çıkış yapıldı
-                loginBtn.textContent = 'Giriş Yap';
-                loginBtn.style.background = 'linear-gradient(135deg, #0ea5e9, #2563eb)';
-                loginBtn.onclick = () => {
-                    loginError.style.display = 'none';
-                    document.getElementById('loginEmail').value = '';
-                    document.getElementById('loginPass').value = '';
-                    loginModal.style.display = 'flex';
-                };
-                adminPanel.style.display = 'none'; // Admin panelini gizle
-            }
-        });
-
-        document.getElementById('loginSubmit').onclick = async () => {
-            const email = document.getElementById('loginEmail').value.trim();
-            const pass = document.getElementById('loginPass').value;
-            
-            if(!email || !pass) {
-                loginError.style.display = 'block';
-                loginError.textContent = 'Lütfen e-posta ve şifre girin.';
-                return;
-            }
+        document.getElementById('adminLoginSubmit').onclick = async () => {
+            const email = document.getElementById('adminEmail').value.trim();
+            const pass = document.getElementById('adminPass').value;
+            const err = document.getElementById('adminLoginError');
 
             try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                loginModal.style.display = 'none';
+                const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+                if (userCredential.user.email === ADMIN_EMAIL) {
+                    document.getElementById('adminLoginModal').style.display = 'none';
+                    document.getElementById('adminLoginBtn').textContent = 'Çıkış Yap (Admin)';
+                    document.getElementById('adminLoginBtn').style.background = '#ef4444';
+                    document.getElementById('adminLoginBtn').onclick = () => signOut(auth);
+                    document.getElementById('adminPanel').style.display = 'block';
+                } else {
+                    err.style.display = 'block';
+                    err.textContent = 'Bu hesap yönetici yetkisine sahip değil!';
+                    await signOut(auth);
+                }
             } catch (e) {
-                loginError.style.display = 'block';
-                loginError.textContent = 'Giriş başarısız: E-posta veya şifre yanlış.';
+                err.style.display = 'block';
+                err.textContent = 'Giriş başarısız: E-posta veya şifre yanlış.';
             }
         };
 
-        // --- KREDİ YÖNETİM FONKSİYONU ---
+        // --- OYUNCU GİRİŞ / KAYIT (MAILSİZ) ---
+        const generateFakeEmail = (mcName) => `${mcName.toLowerCase()}@balpuzmc.com`;
+
+        window.playerRegister = async () => {
+            const mcName = document.getElementById('playerMCName').value.trim();
+            const pass = document.getElementById('playerPass').value;
+            const statusEl = document.getElementById('playerStatus');
+
+            if (!mcName || !pass) {
+                statusEl.style.display = 'block';
+                statusEl.style.color = '#f87171';
+                statusEl.textContent = 'Lütfen Minecraft Adınızı ve Şifrenizi girin.';
+                return;
+            }
+
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#38bdf8';
+            statusEl.textContent = 'Kayıt yapılıyor...';
+
+            try {
+                const fakeEmail = generateFakeEmail(mcName);
+                // Firebase'de kullanıcı oluştur
+                const userCred = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
+                
+                // Firestore'da oyuncu için kredi dokümanı oluştur
+                await setDoc(doc(db, 'players', mcName.toLowerCase()), {
+                    kredi: 0,
+                    authEmail: fakeEmail
+                });
+
+                statusEl.style.color = '#10b981';
+                statusEl.textContent = 'Kayıt başarılı! Giriş yapabilirsiniz.';
+                document.getElementById('playerMCName').value = '';
+                document.getElementById('playerPass').value = '';
+
+            } catch (error) {
+                statusEl.style.color = '#f87171';
+                if (error.code === 'auth/email-already-in-use') {
+                    statusEl.textContent = 'Bu Minecraft adı zaten kayıtlı! Lütfen giriş yapın.';
+                } else if (error.code === 'auth/weak-password') {
+                    statusEl.textContent = 'Şifreniz çok zayıf, en az 6 karakter olmalı.';
+                } else {
+                    statusEl.textContent = 'Hata: ' + error.message;
+                }
+            }
+        };
+
+        window.playerLogin = async () => {
+            const mcName = document.getElementById('playerMCName').value.trim();
+            const pass = document.getElementById('playerPass').value;
+            const statusEl = document.getElementById('playerStatus');
+
+            if (!mcName || !pass) {
+                statusEl.style.display = 'block';
+                statusEl.style.color = '#f87171';
+                statusEl.textContent = 'Lütfen Minecraft Adınızı ve Şifrenizi girin.';
+                return;
+            }
+
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#38bdf8';
+            statusEl.textContent = 'Giriş yapılıyor...';
+
+            try {
+                const fakeEmail = generateFakeEmail(mcName);
+                await signInWithEmailAndPassword(auth, fakeEmail, pass);
+                currentPlayerName = mcName;
+                statusEl.style.display = 'none';
+
+                // Oyuncunun verilerini Firestore'dan çek
+                const playerRef = doc(db, 'players', mcName.toLowerCase());
+                const playerSnap = await getDoc(playerRef);
+                let kredi = 0;
+                if (playerSnap.exists()) {
+                    kredi = playerSnap.data().kredi || 0;
+                } else {
+                    // Eğer bir şekilde Auth'da varsa ama DB'de yoksa oluştur
+                    await setDoc(playerRef, { kredi: 0 });
+                }
+
+                // Giriş formunu gizle, bilgi kutusunu göster
+                document.getElementById('playerAuthForm').style.display = 'none';
+                document.getElementById('playerInfoBox').style.display = 'block';
+                document.getElementById('infoPlayerName').textContent = mcName;
+                document.getElementById('infoPlayerCredit').textContent = kredi;
+
+            } catch (error) {
+                statusEl.style.color = '#f87171';
+                statusEl.textContent = 'Giriş başarısız: MC Adı veya Şifre yanlış.';
+            }
+        };
+
+        window.playerLogout = async () => {
+            await signOut(auth);
+            currentPlayerName = "";
+            document.getElementById('playerAuthForm').style.display = 'flex';
+            document.getElementById('playerInfoBox').style.display = 'none';
+            document.getElementById('playerStatus').style.display = 'none';
+            document.getElementById('playerMCName').value = '';
+            document.getElementById('playerPass').value = '';
+        };
+
+        // --- ADMİN KREDİ GÜNCELLEME ---
         window.updatePlayerCredit = async (action) => {
             const playerName = document.getElementById('targetPlayer').value.trim();
             const amount = parseInt(document.getElementById('creditAmount').value);
@@ -505,7 +559,7 @@
             if (!playerName || isNaN(amount) || amount <= 0) {
                 statusEl.style.display = 'block';
                 statusEl.style.color = '#f87171';
-                statusEl.textContent = 'Lütfen geçerli bir Oyuncu Adı ve Kredi Miktarı girin.';
+                statusEl.textContent = 'Lütfen geçerli bir Oyuncu Adı ve Miktar girin.';
                 return;
             }
 
@@ -515,35 +569,26 @@
             statusEl.textContent = 'İşlem yapılıyor...';
 
             try {
-                // Firestore'da oyuncunun dokümanını kontrol et
                 const playerRef = doc(db, 'players', playerName.toLowerCase());
                 const playerSnap = await getDoc(playerRef);
 
                 if (playerSnap.exists()) {
-                    // Oyuncu zaten var, kredisini güncelle
-                    await updateDoc(playerRef, {
-                        kredi: increment(finalAmount)
-                    });
+                    await updateDoc(playerRef, { kredi: increment(finalAmount) });
                 } else {
-                    // Oyuncu yok, yeni oluştur
-                    await setDoc(playerRef, {
-                        kredi: finalAmount < 0 ? 0 : finalAmount // Eksiye düşürmemek için
-                    });
+                    await setDoc(playerRef, { kredi: finalAmount < 0 ? 0 : finalAmount });
                 }
 
-                statusEl.style.color = '#4ade80';
-                statusEl.textContent = `${playerName} adlı oyuncuya ${action === 'add' ? 'eklendi' : 'çekildi'}: ${amount} Kredi. (Başarılı)`;
+                statusEl.style.color = '#10b981';
+                statusEl.textContent = `${playerName} adlı oyuncuya ${action === 'add' ? 'eklendi' : 'çekildi'}: ${amount} Kredi.`;
                 document.getElementById('targetPlayer').value = '';
                 document.getElementById('creditAmount').value = '';
-
             } catch (error) {
-                console.error("Kredi güncelleme hatası:", error);
                 statusEl.style.color = '#f87171';
-                statusEl.textContent = 'Bir hata oluştu: ' + error.message + ' (Firestore kurallarını kontrol edin)';
+                statusEl.textContent = 'Hata: ' + error.message + ' (Firestore kurallarını kontrol edin)';
             }
         };
 
-        // İletişim Modalı Açma Fonksiyonu
+        // --- DİĞER FONKSİYONLAR ---
         window.openContactModal = (productName) => {
             document.getElementById('contactTitle').textContent = productName + ' Satın Al';
             document.getElementById('contactModal').style.display = 'flex';
@@ -553,32 +598,20 @@
             const ip = document.getElementById('serverIP').innerText;
             navigator.clipboard.writeText(ip).then(() => {
                 alert('IP kopyalandı: ' + ip);
-            }).catch(() => {
-                const temp = document.createElement('textarea');
-                temp.value = ip;
-                document.body.appendChild(temp);
-                temp.select();
-                document.execCommand('copy');
-                document.body.removeChild(temp);
-                alert('IP kopyalandı: ' + ip);
             });
         };
 
+        // Sunucu durumu
         async function fetchServerStatus() {
             const playerEl = document.getElementById('playerCount');
             try {
                 const res = await fetch('https://api.mcsrvstat.us/3/BalpuzMc.mcgiris.online');
                 const data = await res.json();
-                if (data.online && data.players) {
-                    playerEl.textContent = data.players.online + ' / ' + data.players.max;
-                } else {
-                    playerEl.textContent = '0 / 0';
-                }
+                playerEl.textContent = (data.online && data.players) ? `${data.players.online} / ${data.players.max}` : '0 / 0';
             } catch (e) {
                 playerEl.textContent = 'Hata';
             }
         }
-
         fetchServerStatus();
         setInterval(fetchServerStatus, 30000);
     </script>
