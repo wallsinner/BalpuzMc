@@ -45,7 +45,7 @@
             border-radius: 8px;
             font-weight: 700;
             font-size: 1rem;
-            display: flex;
+            display: none; /* Başlangıçta gizli, giriş yapınca görünecek */
             align-items: center;
             gap: 8px;
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
@@ -287,6 +287,28 @@
         /* FOOTER */
         .footer { text-align: center; padding: 30px; color: #7dd3fc; font-size: 0.9rem; border-top: 1px solid rgba(56, 189, 248, 0.1); opacity: 0.7; }
         .footer a { color: #38bdf8; text-decoration: none; }
+
+        /* GİRİŞ MODALI (POPUP) */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: #0a1628; border: 1px solid #38bdf8; border-radius: 16px; padding: 30px; width: 90%; max-width: 400px; position: relative;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+        }
+        .modal-content h2 { color: #fff; margin-bottom: 20px; font-size: 1.5rem; }
+        .modal-input {
+            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #38bdf8; background: #040b16; color: #fff; font-size: 1rem; font-family: 'Outfit', sans-serif;
+        }
+        .modal-input:focus { outline: none; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+        .modal-btn {
+            width: 100%; padding: 12px; border-radius: 8px; border: none; background: linear-gradient(135deg,#38bdf8,#2563eb); color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer; font-family: 'Outfit', sans-serif;
+        }
+        .modal-btn:hover { opacity: 0.9; }
+        .modal-close {
+            position: absolute; top: 12px; right: 16px; background: none; border: none; color: #7dd3fc; font-size: 1.5rem; cursor: pointer;
+        }
+        .modal-error { color: #f87171; margin-bottom: 12px; font-size: 0.9rem; display: none; }
     </style>
 </head>
 <body>
@@ -295,8 +317,8 @@
     <nav class="navbar">
         <a href="#" class="nav-logo">Balpuz<span>Mc</span></a>
         <div class="nav-right">
-            <div class="credit-badge">💰 0 Kredi</div>
-            <button class="login-btn" onclick="alert('Hesap sistemi yakında aktif olacak! Şimdilik sadece gezinebilirsin.')">Giriş Yap</button>
+            <div class="credit-badge" id="creditBadge">💰 0 Kredi</div>
+            <button class="login-btn" id="loginBtn">Giriş Yap</button>
         </div>
     </nav>
 
@@ -323,20 +345,17 @@
         <h2 class="section-title">⚔️ Oyun Modlarımız</h2>
         <div class="mod-grid">
             
-            <!-- SOLDAKİ: SMP (BAKIMDA) -->
             <div class="mod-card maintenance">
                 <h3>SMP</h3>
                 <p>Sadece Bakımda</p>
                 <div><span class="maintenance-badge">Bakımda</span></div>
             </div>
 
-            <!-- ORTADAKİ: BOXPvP (AKTİF) -->
             <div class="mod-card">
                 <h3>BoxPvP</h3>
                 <p>Kasıl, maden kaz, gücüne güç kat! Kendi kutunu inşa et ve rakiplerini alt et.</p>
             </div>
 
-            <!-- SAĞDAKİ: GENPVP (BAKIMDA) -->
             <div class="mod-card maintenance">
                 <h3>GenPvP</h3>
                 <p>Sadece Bakımda</p>
@@ -426,12 +445,10 @@
         <!-- DUYURULAR -->
         <section class="announcements">
             <h2 class="panel-title" style="margin-bottom: 20px;">📢 Duyurular</h2>
-            
             <div class="announcement-item">
                 <div class="ann-date">GÜNCEL</div>
                 <div class="ann-text">Sunucumuzda şu an itibariyle sadece <strong>BoxPvP</strong> aktif olarak yapılmaktadır. SMP ve GenPvP modlarımız çok yakında sizlerle!</div>
             </div>
-            
         </section>
 
     </main>
@@ -440,8 +457,88 @@
         BalpuzMc &copy; 2026 — Tüm hakları saklıdır. | TikTok & Instagram: <a href="https://www.tiktok.com/@1.berkeren_36" target="_blank">@1.berkeren_36</a>
     </footer>
 
-    <script>
-        function copyIP() {
+    <!-- GİRİŞ MODALI -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('loginModal').style.display='none'">×</button>
+            <h2>Yönetici Girişi</h2>
+            <input type="email" id="loginEmail" class="modal-input" placeholder="E-posta">
+            <input type="password" id="loginPass" class="modal-input" placeholder="Şifre">
+            <div id="loginError" class="modal-error"></div>
+            <button class="modal-btn" id="loginSubmit">Giriş Yap</button>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK VE KODLAR -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // Senin Firebase Bilgilerin
+        const firebaseConfig = {
+            apiKey: "AIzaSyDbqhoJauxMoAV_fGaKEaB8P2Q-4KB2rvk",
+            authDomain: "balpuzmc-6899a.firebaseapp.com",
+            projectId: "balpuzmc-6899a",
+            storageBucket: "balpuzmc-6899a.firebasestorage.app",
+            messagingSenderId: "156418313666",
+            appId: "1:156418313666:web:901ee934e601a7424c5a5b",
+            measurementId: "G-431KVZYKRX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const loginBtn = document.getElementById('loginBtn');
+        const creditBadge = document.getElementById('creditBadge');
+        const loginModal = document.getElementById('loginModal');
+        const loginError = document.getElementById('loginError');
+
+        // Giriş durumunu dinle
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Giriş yapıldı
+                loginBtn.textContent = 'Çıkış Yap (' + (user.email ? user.email.split('@')[0] : 'Admin') + ')';
+                loginBtn.style.background = '#ef4444'; // Kırmızı renk
+                loginBtn.onclick = () => {
+                    if(confirm('Çıkış yapmak istediğinize emin misiniz?')) signOut(auth);
+                };
+                creditBadge.style.display = 'flex'; // Kredi rozetini göster
+            } else {
+                // Çıkış yapıldı
+                loginBtn.textContent = 'Giriş Yap';
+                loginBtn.style.background = 'linear-gradient(135deg, #0ea5e9, #2563eb)';
+                loginBtn.onclick = () => {
+                    loginError.style.display = 'none';
+                    document.getElementById('loginEmail').value = '';
+                    document.getElementById('loginPass').value = '';
+                    loginModal.style.display = 'flex';
+                };
+                creditBadge.style.display = 'none'; // Kredi rozetini gizle
+            }
+        });
+
+        // Giriş butonu tıklandığında
+        document.getElementById('loginSubmit').onclick = async () => {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPass').value;
+            
+            if(!email || !pass) {
+                loginError.style.display = 'block';
+                loginError.textContent = 'Lütfen e-posta ve şifre girin.';
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                loginModal.style.display = 'none'; // Başarılı olursa modalı kapat
+            } catch (e) {
+                loginError.style.display = 'block';
+                loginError.textContent = 'Giriş başarısız: E-posta veya şifre yanlış.';
+            }
+        };
+
+        // IP Kopyalama
+        window.copyIP = () => {
             const ip = document.getElementById('serverIP').innerText;
             navigator.clipboard.writeText(ip).then(() => {
                 alert('IP kopyalandı: ' + ip);
@@ -454,14 +551,14 @@
                 document.body.removeChild(temp);
                 alert('IP kopyalandı: ' + ip);
             });
-        }
+        };
 
+        // Sunucu Durumu
         async function fetchServerStatus() {
             const playerEl = document.getElementById('playerCount');
             try {
                 const res = await fetch('https://api.mcsrvstat.us/3/BalpuzMc.mcgiris.online');
                 const data = await res.json();
-
                 if (data.online && data.players) {
                     playerEl.textContent = data.players.online + ' / ' + data.players.max;
                 } else {
