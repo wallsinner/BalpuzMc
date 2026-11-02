@@ -111,6 +111,14 @@
         }
         .player-panel h2 { color: #38bdf8; font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);}
         .player-panel p { color: #bae6fd; margin-bottom: 20px; }
+        
+        /* GÜVENLİK UYARISI (YENİ) */
+        .security-warning {
+            background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #fca5a5;
+            padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95rem; font-weight: bold;
+            display: inline-block;
+        }
+        
         .player-form { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .player-input {
             padding: 15px; border-radius: 8px; border: 1px solid #38bdf8; background: rgba(4, 11, 22, 0.8); 
@@ -261,6 +269,11 @@
             <h2>🎮 Oyuncu Girişi</h2>
             <p>Minecraft oyun içi isminiz ve şifreniz ile siteye giriş yapın veya yeni hesap oluşturun.</p>
             
+            <!-- GÜVENLİK UYARISI -->
+            <div class="security-warning">
+                ⚠️ Lütfen şifrenizi başka hiçbir yerde kullanmayın, sadece buraya özel olsun!
+            </div>
+
             <!-- Giriş/Kayıt Formu -->
             <div class="player-form" id="playerAuthForm">
                 <input type="text" id="playerMCName" class="player-input" placeholder="Minecraft Adınız">
@@ -373,6 +386,9 @@
         <div class="modal-content">
             <button class="modal-close" onclick="document.getElementById('adminLoginModal').style.display='none'">×</button>
             <h2>Yönetici Girişi</h2>
+            <!-- YÖNETİCİ İÇİN DE UYARI -->
+            <div style="color: #fca5a5; font-size: 0.85rem; margin-bottom: 15px;">Lütfen şifrenizi başka hiçbir yerde kullanmayın, sadece buraya özel olsun!</div>
+            
             <input type="email" id="adminEmail" class="modal-input" placeholder="E-posta">
             <input type="password" id="adminPass" class="modal-input" placeholder="Şifre">
             <div id="adminLoginError" class="modal-error"></div>
@@ -416,7 +432,7 @@
         const db = getFirestore(app);
 
         const ADMIN_EMAIL = "wallsinner680@gmail.com";
-        let currentPlayerName = ""; // Oyuncu giriş yaptıysa adını tutar
+        let currentPlayerName = "";
 
         // --- YÖNETİCİ GİRİŞİ ---
         document.getElementById('adminLoginBtn').onclick = () => {
@@ -469,10 +485,8 @@
 
             try {
                 const fakeEmail = generateFakeEmail(mcName);
-                // Firebase'de kullanıcı oluştur
                 const userCred = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
                 
-                // Firestore'da oyuncu için kredi dokümanı oluştur
                 await setDoc(doc(db, 'players', mcName.toLowerCase()), {
                     kredi: 0,
                     authEmail: fakeEmail
@@ -517,18 +531,15 @@
                 currentPlayerName = mcName;
                 statusEl.style.display = 'none';
 
-                // Oyuncunun verilerini Firestore'dan çek
                 const playerRef = doc(db, 'players', mcName.toLowerCase());
                 const playerSnap = await getDoc(playerRef);
                 let kredi = 0;
                 if (playerSnap.exists()) {
                     kredi = playerSnap.data().kredi || 0;
                 } else {
-                    // Eğer bir şekilde Auth'da varsa ama DB'de yoksa oluştur
                     await setDoc(playerRef, { kredi: 0 });
                 }
 
-                // Giriş formunu gizle, bilgi kutusunu göster
                 document.getElementById('playerAuthForm').style.display = 'none';
                 document.getElementById('playerInfoBox').style.display = 'block';
                 document.getElementById('infoPlayerName').textContent = mcName;
@@ -601,7 +612,6 @@
             });
         };
 
-        // Sunucu durumu
         async function fetchServerStatus() {
             const playerEl = document.getElementById('playerCount');
             try {
