@@ -218,13 +218,13 @@
         .panel-desc { color: #bae6fd; font-size: 1rem; margin-bottom: 25px; line-height: 1.5; opacity: 0.8; }
 
         /* KREDİ YÜKLEME PANELİ */
-        .credit-packs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .credit-packs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .pack {
-            flex: 1; background: rgba(4, 11, 22, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); padding: 15px 10px; text-align: center;
+            flex: 1 1 30%; background: rgba(4, 11, 22, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); padding: 15px 10px; text-align: center;
             border-radius: 10px; cursor: pointer; transition: 0.2s;
         }
         .pack:hover, .pack.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
-        .pack-amount { color: #38bdf8; font-weight: 900; font-size: 1.2rem; }
+        .pack-amount { color: #38bdf8; font-weight: 900; font-size: 1.1rem; }
         .pack-price { color: #bae6fd; font-size: 0.9rem; margin-top: 5px; }
         
         .buy-action-btn {
@@ -254,6 +254,18 @@
         .vip-buy-btn:hover { background: #38bdf8; color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
         .vip-item.mvip .vip-buy-btn { background: rgba(129, 140, 248, 0.1); color: #818cf8; border-color: #818cf8; }
         .vip-item.mvip .vip-buy-btn:hover { background: #818cf8; color: #fff; box-shadow: 0 0 15px rgba(129, 140, 248, 0.4); }
+
+        /* BVIP - ALTIN TEMA */
+        .vip-item.bvip { border-color: #fbbf24; background: rgba(251, 191, 36, 0.05); }
+        .vip-item.bvip .vip-price { color: #fbbf24; }
+        .vip-item.bvip .vip-buy-btn { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border-color: #fbbf24; }
+        .vip-item.bvip .vip-buy-btn:hover { background: #fbbf24; color: #000; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+
+        /* BVIP+ - PREMIUM PEMBE TEMA */
+        .vip-item.bvip-plus { border-color: #f472b6; background: rgba(244, 114, 182, 0.05); }
+        .vip-item.bvip-plus .vip-price { color: #f472b6; }
+        .vip-item.bvip-plus .vip-buy-btn { background: rgba(244, 114, 182, 0.1); color: #f472b6; border-color: #f472b6; }
+        .vip-item.bvip-plus .vip-buy-btn:hover { background: #f472b6; color: #000; box-shadow: 0 0 15px rgba(244, 114, 182, 0.4); }
 
         /* DUYURULAR */
         .announcements {
@@ -356,6 +368,14 @@
                     <div class="pack-amount">150 Kredi</div>
                     <div class="pack-price">1.50 TL</div>
                 </div>
+                <div class="pack" onclick="alert('200 Kredi seçildi. (Ödeme sistemi yakında!)')">
+                    <div class="pack-amount">200 Kredi</div>
+                    <div class="pack-price">2.00 TL</div>
+                </div>
+                <div class="pack" onclick="alert('250 Kredi seçildi. (Ödeme sistemi yakında!)')">
+                    <div class="pack-amount">250 Kredi</div>
+                    <div class="pack-price">2.50 TL</div>
+                </div>
             </div>
             
             <button class="buy-action-btn" onclick="alert('Gerçek ödeme sistemi yakında aktif olacak!')">Hemen Kredi Yükle</button>
@@ -383,6 +403,22 @@
                     </div>
                     <div class="vip-price">150 Kredi</div>
                     <button class="vip-buy-btn" onclick="alert('MVIP satın alma sistemi yakında!')">Satın Al</button>
+                </div>
+                <div class="vip-item bvip">
+                    <div class="vip-info">
+                        <h4>BVIP</h4>
+                        <p>7 Günlük Özel Ayrıcalık</p>
+                    </div>
+                    <div class="vip-price">175 Kredi</div>
+                    <button class="vip-buy-btn" onclick="alert('BVIP satın alma sistemi yakında!')">Satın Al</button>
+                </div>
+                <div class="vip-item bvip-plus">
+                    <div class="vip-info">
+                        <h4>BVIP+</h4>
+                        <p>7 Günlük En Üst Ayrıcalık</p>
+                    </div>
+                    <div class="vip-price">200 Kredi</div>
+                    <button class="vip-buy-btn" onclick="alert('BVIP+ satın alma sistemi yakında!')">Satın Al</button>
                 </div>
             </div>
         </section>
